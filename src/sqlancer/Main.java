@@ -258,15 +258,10 @@ public final class Main {
 
         public void logReduced(StateToReproduce state) {
             FileWriter reduceFileWriter = getReduceFileWriter();
-
-            StringBuilder sb = new StringBuilder();
-            for (Query<?> s : state.getStatements()) {
-                sb.append(databaseProvider.getLoggableFactory().createLoggable(s.getLogString()).getLogString());
-            }
             try {
-                reduceFileWriter.write(sb.toString());
-
-            } catch (IOException e) {
+                printState(reduceFileWriter, state);
+                // reduceFileWriter.write(sb.toString());
+            } catch (Exception e) {
                 throw new AssertionError(e);
             } finally {
                 try {
